@@ -11,3 +11,4 @@ GitHub.
 ? Publicar no site o link para o repositório.
 ? Obs: é necessário ter logs de modificação por todos os
 participantes. No mínimo 3 para cada participante.
+ 

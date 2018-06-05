@@ -1,0 +1,6 @@
+Elaborar um Plano de Segurança da Informação considerando os itens
+definidos na disciplina de Segurança da Informação. A elaboração deste
+Plano deverá estar alinhada aos princípios definidos pelo processo
+Segurança da Informação do ciclo Desenho de Serviço do ITIL V3.
+Elaborar ainda os Acordos de Nível de Serviço (SLA) para os ativos
+identificados.

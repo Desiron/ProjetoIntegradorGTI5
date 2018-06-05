@@ -1,0 +1,6 @@
+? Elaborar um documento com os conceitos e funcionalidades do
+protocolo 802.1x.
+? Instalar e configurar um servidor de autenticação. Sugestão:
+FreeRadius
+? Documentar a instalação e configuração através dos prints de telas.
+

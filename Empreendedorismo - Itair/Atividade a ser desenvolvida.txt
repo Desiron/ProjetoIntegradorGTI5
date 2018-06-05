@@ -1,0 +1,4 @@
+Elaborar um esboço de um plano de negócio contendo os seguintes itens:
+parcerias chave, atividades chave, recursos chave e proposta de valor,
+relacionamento com o consumidor, canais, segmentos de clientes e custos
+e fontes de receita.

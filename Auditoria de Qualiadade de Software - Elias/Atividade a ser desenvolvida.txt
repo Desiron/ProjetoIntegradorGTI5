@@ -1,0 +1,13 @@
+? Elaborar os casos de testes para validar o sistema construído na
+disciplina de Programação para Frameworks. Automatizar esses
+casos de teste através do Selenium.
+? Postar os casos de testes (em HTML)
+? Postar o código do Selenium referente à automatização dos
+testes.
+? Gerência de Configuração, controle de versão: fazer o controle de
+versão de tudo que for produzido no projeto integrador (código
+fonte, documentos, etc) através do git e publicar no repositório do
+GitHub.
+? Publicar no site o link para o repositório.
+? Obs: é necessário ter logs de modificação por todos os
+participantes. No mínimo 3 para cada participante.

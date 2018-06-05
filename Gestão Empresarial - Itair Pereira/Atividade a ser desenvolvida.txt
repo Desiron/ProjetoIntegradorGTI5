@@ -1,0 +1,4 @@
+Indicar qual software integrado de gestão e/ou ferramenta gerencial pode
+contribuir com a Política de segurança a ser elaborada e como esse
+software/ferramenta pode contribuir com a proteção da informação contra
+ameaças.

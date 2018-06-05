@@ -1,0 +1,9 @@
+"Fazer uma análise de risco de ativos críticos para o sucesso do negócio,
+baseado no sistema de controle de acesso desenvolvido no componente
+Programação com Frameworks e propor medidas para controle dos riscos.
+Atividades:
+● Realizar o levantamento dos ativos críticos relacionados a
+tecnologias para o sucesso do negócio.
+● Levantar os riscos inerentes aos ativos.
+● Estabelecer medidas para controle dos riscos.
+"

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Formulário Produto</title>
+</h:head>
+<h:body>
+<h:form id="menu">
+		<p:menubar>
+		<p:menuitem action="/admin/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:menuitem>
+			<p:submenu label="Cadastrar">
+				<p:menuitem value="Pessoa" action="#{pessoaCtrl.actionInserir}" />
+				<p:menuitem value="Produto" action="#{produtoCtrl.actionInserir}" />
+				<p:menuitem value="Forma Pagamento" action="lista_formaPgto" />
+			</p:submenu>
+			<p:submenu label="Listas">
+				<p:menuitem value="Pessoa" action="lista_pessoa" />
+				<p:menuitem value="Produto" action="lista_produto" />
+			</p:submenu>
+			<f:facet name="options">
+				<p:inputText style="margin-right:10px" placeholder="Search" />
+				<p:commandButton
+					onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+					type="button" value="Sair" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<div align="center">		
+		<h:form id="formcad">
+			
+			<br></br><br></br>
+			<h3>
+			<h:outputText value="Formulário de Cadastro de Produto"/>
+			</h3>
+			<p:panelGrid columns="1">			
+				<h:outputText value="Nome:" />
+				<p:inputText value="#{produtoCtrl.produto.nome}" />
+				<h:outputText value="Preço:" />
+				<p:inputMask value="#{produtoCtrl.produto.preco}" />
+				<p:commandButton value="Salvar Produto"	actionListener="#{produtoCtrl.actionGravar}" update = "form, formcad"  />
+			</p:panelGrid>			
+			<br></br><br></br>
+		</h:form>
+	</div>
+	<h:form id = "form">
+		<div align="center">
+			<h:panelGrid columns="1">
+				<p:dataTable var="prod" value="#{produtoCtrl.lista}">
+					<p:column id="id" style="width:20px">
+					<div align="center">
+						<f:facet name="header" value="ID" >
+							<h:outputText value="ID" />
+						</f:facet>
+						<p:outputLabel value="#{prod.id}" />
+						</div>
+					</p:column>
+					<p:column id="nome">
+					<div align="center">
+						<f:facet name="header" value="Nome">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<p:outputLabel value="#{prod.nome}" />
+						</div>
+					</p:column>
+					<p:column id="preco">
+					<div align="center" >
+						<f:facet name="header" value="Preço">
+							<h:outputText value="Preço" />
+						</f:facet>
+						<p:outputLabel value="R$ " />
+						<p:outputLabel value="#{prod.preco}" >
+						<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+						</p:outputLabel>
+						</div>
+					</p:column>
+					<p:column id="Alterar" >
+					<div align="center">
+						<p:commandButton  value="Alterar" actionListener="#{produtoCtrl.actionAlterar(prod)}" update="formcad"/>
+						<p:commandButton value="Excluir" actionListener="#{produtoCtrl.actionExcluir(prod)}" update="form"/>
+						</div>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+		</div>
+	</h:form>
+</h:body>
+<h:messages style="color:red;margin:2px;" />
+</html>

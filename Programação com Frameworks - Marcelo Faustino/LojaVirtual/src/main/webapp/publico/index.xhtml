@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Loja Virtual</title>
+</h:head>
+
+<h:body>
+	<h:form id="menu">		
+		<p:toolbar>
+        <f:facet name="left">
+            <p:commandLink action="/publico/index.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:commandLink>          
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+           <p:inputText value="#{produtoCtrl.filtro}" />
+			<p:commandButton icon="ui-icon-search" update="lisPro" />
+        </f:facet>
+ 
+        <f:facet name="right">       	 
+            
+       	 <p:commandLink action="/publico/carrinho.xhtml">
+			<p:graphicImage value="/imagem/carrinho.png" width="35"/> 
+      	 </p:commandLink>
+      	 
+         <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>            
+         <p:commandButton value="Cadastre-se" action="#{pessoaCtrl.actionInserirCadastro}" />
+				<p:commandButton action="/publico/login.xhtml" value="Entre" />
+        </f:facet>
+ 
+    </p:toolbar>
+		
+	</h:form>
+	<h:form id="lisPro">
+	<br></br>
+		<p:growl id="addItem" life="2000" />
+			<p:dataGrid var="prod" value="#{produtoCtrl.lista}" columns="4"	layout="grid" rows="12" paginator="true" id="prods"	paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" emptyMessage="Nenhum produto encontrado com: #{produtoCtrl.filtro}">
+				<p:panel style="text-align:center" styleClass="semBorda">					
+						<div align="center">
+						<p:panelGrid columns="1" styleClass="semBorda">
+								<p:graphicImage value="/imagem/teste.JPG" width="200" />
+								<p:outputLabel value="#{prod.nome}" />
+								<p:outputLabel value="R$ " >
+									<p:outputLabel value="#{prod.preco}" >
+									<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+									</p:outputLabel>								
+								</p:outputLabel>
+								<p:commandButton value="Adicionar ao Carrinho" styleClass="ui-priority-primary" action="#{carrinhoCtrl.comprar(prod)}" update="lisPro"/>
+						</p:panelGrid>
+						</div>				
+				</p:panel>
+			</p:dataGrid>			
+			<style type="text/css">
+.semBorda tr, .semBorda td {
+	border: none !important;
+	text-align: center;
+	align-content: center;
+}
+.imagemLogo     { width: 16px; height: 16px; background-image: url("/imagens/ChambaryTek.png")     !important;}
+</style>
+</h:form>	
+</h:body>
+</html>

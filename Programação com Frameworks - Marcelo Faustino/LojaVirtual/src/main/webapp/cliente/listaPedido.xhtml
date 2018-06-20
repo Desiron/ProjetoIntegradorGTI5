@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Loja Virtual</title>
+</h:head>
+<h:body>
+	<h:form id="menu">	
+		<p:toolbar>
+        <f:facet name="left">
+            <p:commandLink action="/cliente/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:commandLink>          
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+           <p:inputText value="#{produtoCtrl.filtro}" />
+			<p:commandButton icon="ui-icon-search" action="/cliente/principal.xhtml" />
+        </f:facet>
+ 
+        <f:facet name="right">
+        
+       	<p:commandLink rendered="#{carrinhoCtrl.verificarAdmin}" action="/admin/principal.xhtml">
+       	  <p:graphicImage value="/imagem/admin.png" width="25" />
+       	  <span  class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+       	 </p:commandLink>        	 
+            
+       	 <p:commandLink action="/cliente/carrinho.xhtml">
+			<p:graphicImage value="/imagem/carrinho.png" width="35"/> 
+      	 </p:commandLink>
+      	 
+         <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+            
+          <p:menuButton value="Bem Vindo, #{carrinhoCtrl.nomeUserLog}" iconPos="ui-icon-person">
+              <p:menuitem value="Meus Pedidos" action="/cliente/listaPedido.xhtml" />
+			  <p:menuitem value="Sair" onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+			  type="button" icon="ui-icon-extlink" />
+          </p:menuButton>
+        </f:facet>
+ 
+    </p:toolbar>		
+	</h:form>
+	<br></br>
+	<h:form id="lisPedido">
+	<p:growl id="msg" life="1000" />
+		<p:panelGrid columns="1" styleClass="semBorda">
+		<div align="center">
+			</div>
+			<p:dataTable emptyMessage="Nenhum pedido realizado" var="pedido" value="#{carrinhoCtrl.listaPedidoLogado}" styleClass="semBorda" style="horizontal-align:center">
+					<f:facet name="header">
+					
+					<p:outputLabel value="Lista de Pedidos de Compra" />
+					
+					</f:facet>
+					<p:column id="nome">
+						<div align="left">
+							<div align="center">
+							<p:panelGrid columns="1">							
+							<br></br><br></br>						
+							<p:dataTable emptyMessage="Nenhum item para esse pedido!" var="item" value="#{carrinhoCtrl.retornaIntensPedido(pedido)}" styleClass="semBorda" style="horizontal-align:center">
+							<f:facet name="header">
+							<div align="left">
+								<p:outputLabel value="Pedido Realizado em: " />
+								<p:outputLabel value="#{pedido.data}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+								<p:outputLabel value=" | ID: #{pedido.id}" />
+							</div>
+							</f:facet>
+							<p:column id="foto">
+								<p:graphicImage value="/imagem/teste.JPG" width="200" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputLabel value="Produto" />
+								</f:facet>
+								<div align="center">
+								<p:outputLabel style="width:150px" value="#{item.produto.nome}" />
+								</div>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputLabel value="Quantidade" />
+								</f:facet>
+								<div align="center">
+								<p:outputLabel style="width:150px" value="#{item.qtd}" />
+								</div>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputLabel value="Preço Unid." />
+								</f:facet>
+								<div align="center">
+								<p:outputLabel value="R$ " />
+								<p:outputLabel style="width:150px" value="#{item.valorUnitario}" >
+								<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+								</p:outputLabel>
+								</div>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputLabel value="SubTotal" />
+								</f:facet>
+								<div align="center">
+								<p:outputLabel value="R$ " />
+								<p:outputLabel style="width:150px" value="#{item.subtotal}" >
+								<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+								</p:outputLabel>
+								</div>
+							</p:column>								
+							<f:facet name="footer">
+							<div align="left">
+							<p:outputLabel value="Forma de Pagamento: #{pedido.formaPagamento.descricao}"/>
+							</div>
+								<div align="right">										
+									<p:outputLabel value="Total: R$" />
+									<p:outputLabel value="#{pedido.valor}" >
+									<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+									</p:outputLabel>
+								</div>
+							</f:facet>							
+							</p:dataTable>
+							</p:panelGrid>
+							</div>
+						</div>
+					</p:column>					
+				</p:dataTable>
+			
+			
+			
+			
+			
+		
+			</p:panelGrid>		
+		<style type="text/css">
+			.semBorda tr, .semBorda td {
+			border: none !important;
+			align-content: initial;
+			}
+			.cor tr, .cor td {
+			color: black;
+			}
+		</style>
+	</h:form>
+</h:body>
+</html>

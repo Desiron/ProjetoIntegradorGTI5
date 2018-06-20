@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Loja Virtual</title>
+</h:head>
+
+<h:body>
+
+	<h:form id="menu">
+		<p:menubar>
+			<p:menuitem value="Início" action="/publico/index.xhtml" />
+			<f:facet name="options">
+				<p:inputText value="#{produtoCtrl.filtro}" />
+				<p:commandButton value="Pesquisar" action="/publico/index.xhtml" />
+				<p:commandButton value="Carrinho" action="/publico/carrinho.xhtml" />
+			</f:facet>
+		</p:menubar>
+	</h:form>	
+	<br></br><br></br>	
+	<h:form id="lisItem">
+		<p:panelGrid columns="1" styleClass="semBorda">
+		<div align="center">
+			<p:outputLabel value="Seu Carrinho de Compras" styleClass="cor" />
+			</div>
+			<p:panelGrid columns="1">
+				<p:dataTable emptyMessage="Nenhum item no carrinho!" var="item" value="#{carrinhoCtrl.listaPedido}" style="horizontal-align:center">
+					<p:column id="foto">
+						<p:graphicImage value="/imagem/teste.JPG" width="200" />
+					</p:column>
+					<p:column id="nome">
+						<f:facet name="header" value="Produto">
+							<h:outputText value="Produto" />
+						</f:facet>
+						<p:outputLabel value="#{item.produto.nome}" />
+					</p:column>
+					<p:column id="qts">
+						<f:facet name="header" value="qdt">
+							<h:outputText value="Quantidade" />
+						</f:facet>
+						<div align="center">
+							<p:inputText style="width:30px" size="1" maxlength="3"
+								value="#{item.qtd}">
+								<p:ajax event="keyup" update="lisItem" />
+								</p:inputText>
+						</div>
+					</p:column>
+					<p:column id="valorUni">
+						<f:facet name="header" value="valorUni">
+							<h:outputText value="Valor Unitário" />
+						</f:facet>
+						<p:outputLabel value="#{item.valorUnitario}" />
+					</p:column>
+					<p:column id="SubTotal">
+						<f:facet name="header" value="Subtotal">
+							<h:outputText value="Subtotal" />
+						</f:facet>
+						<h:outputText value="#{item.subtotal}" />
+					</p:column>
+					<p:column style="width:40px">
+						<div align="center">
+							<p:commandButton icon="ui-icon-closethick"
+								action="#{carrinhoCtrl.excluirItemLista(item)}" update="lisItem,btnFinalizar,formaPagamento" />
+						</div>
+					</p:column>
+					<f:facet name="footer">						
+						<div align="right">
+							<p:outputLabel value="Total: R$ " />
+							<p:outputLabel value="#{carrinhoCtrl.totalLista}"
+								styleClass="cor" />
+						</div>
+					</f:facet>
+				</p:dataTable>
+			</p:panelGrid>			
+		</p:panelGrid>
+		</h:form>
+		<h:form id="formaPagamento">
+			 <h:panelGrid columns="2" cellpadding="5" rendered="#{carrinhoCtrl.listaVazia}">
+        <p:outputLabel for="menu" value="Forma de Pagamento:" />        
+         <p:selectOneMenu id="car" value="#{formaPagtoCtrl.formaPagTemp}">
+            <f:selectItem itemLabel="Método de Pagamento" itemValue="" />
+            <f:selectItems value="#{formaPagtoCtrl.nomeForPag}" />
+        </p:selectOneMenu>
+        </h:panelGrid>
+		</h:form>
+	<h:form id="btnFinalizar">
+		<div align="right" >
+			<p:commandButton rendered="#{carrinhoCtrl.listaVazia}" style="width:300px;height:50px" value="Finalizar Compra" action="#{carrinhoCtrl.finalizarPedido}" />
+		</div>
+		<style type="text/css">
+			.semBorda tr, .semBorda td {
+			border: none !important;
+			}
+			.cor tr, .cor td {
+			color: black;
+			}
+		</style>
+		<p:commandButton value="Retorna Usuário" action="#{carrinhoCtrl.testePessoa}" update="pes"/>
+	</h:form>
+</h:body>
+</html>

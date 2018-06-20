@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Área do Cliente</title>
+</h:head>
+<h:body>
+<h:form id="Msg">
+	<p:growl id="ff" life="2000" />
+</h:form>
+	<h:form id="menu">
+	
+	
+	
+	<p:toolbar>
+        <f:facet name="left">
+            <p:commandLink action="/cliente/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:commandLink>          
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+           <p:inputText value="#{produtoCtrl.filtro}" />
+			<p:commandButton icon="ui-icon-search" update="lisPro" />
+        </f:facet>
+ 
+        <f:facet name="right">
+        
+       	<p:commandLink rendered="#{carrinhoCtrl.verificarAdmin}" action="/admin/principal.xhtml">
+       	  <p:graphicImage value="/imagem/admin.png" width="25" />
+       	  <span  class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+       	 </p:commandLink>        	 
+            
+       	 <p:commandLink action="/cliente/carrinho.xhtml">
+			<p:graphicImage value="/imagem/carrinho.png" width="35"/> 
+      	 </p:commandLink>
+      	 
+         <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+            
+          <p:menuButton value="Bem Vindo, #{carrinhoCtrl.nomeUserLog}" iconPos="ui-icon-person">
+              <p:menuitem value="Meus Pedidos" action="/cliente/listaPedido.xhtml" />
+			  <p:menuitem value="Sair" onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+			  type="button" icon="ui-icon-extlink" />
+          </p:menuButton>
+        </f:facet>
+ 
+    </p:toolbar>
+	<br></br><br></br>
+		
+		
+		
+		<!-- <p:menubar>
+			<p:menuitem action="/cliente/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:menuitem>
+			<f:facet name="options">
+				<p:inputText value="#{produtoCtrl.filtro}" />
+				<p:commandButton value="Pesquisar" action="/cliente/principal.xhtml" />
+				<p:commandButton value="Carrinho" action="/cliente/carrinho.xhtml" />
+				<p:commandButton rendered="#{carrinhoCtrl.verificarAdmin}" value="Área Administrativa" action="/admin/principal.xhtml" />
+				<p:commandButton
+					onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+					type="button" value="Sair" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar> -->
+		
+		
+		
+		
+		
+	</h:form>
+	<h:form id="lisPro">		
+		<p:dataGrid var="prod" value="#{produtoCtrl.lista}" columns="4"
+			layout="grid" rows="12" paginator="true" id="prods"
+			paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			emptyMessage="Nenhum produto encontrado com: #{produtoCtrl.filtro}">
+			<p:panel style="text-align:center" styleClass="semBorda">
+				<div align="center">
+					<p:panelGrid columns="1" styleClass="semBorda">
+						<p:graphicImage value="/imagem/teste.JPG" width="200" />
+						<h:outputText value="#{prod.nome}" />
+						<p:outputLabel value="R$ " >
+								<p:outputLabel value="#{prod.preco}" >
+								<f:convertNumber maxFractionDigits="2" pattern="###,###.00" />
+								</p:outputLabel>								
+							</p:outputLabel>
+						<p:commandButton value="Adicionar ao Carrinho"
+							styleClass="ui-priority-primary"
+							action="#{carrinhoCtrl.comprar(prod)}" update="Msg" />
+					</p:panelGrid>
+				</div>
+			</p:panel>
+		</p:dataGrid>
+	</h:form>
+	<style type="text/css">
+.semBorda tr, .semBorda td {
+	border: none !important;
+	text-align: center;
+	align-content: center;
+}
+.testeMenu tr, .testeMenu td {
+	border: none !important;
+	text-align: center;
+	align-content: center;
+	t
+}
+</style>
+</h:body>
+</html>

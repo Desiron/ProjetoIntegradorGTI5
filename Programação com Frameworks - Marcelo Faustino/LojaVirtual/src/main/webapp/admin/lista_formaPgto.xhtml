@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Loja Virtual</title>
+</h:head>
+<h:body>
+<h:form id="menu">
+		<p:menubar>		
+			<p:menuitem action="/admin/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:menuitem>
+			<p:submenu label="Cadastrar">
+				<p:menuitem value="Pessoa" action="#{pessoaCtrl.actionInserir}" />
+				<p:menuitem value="Produto" action="#{produtoCtrl.actionInserir}" />
+				<p:menuitem value="Forma Pagamento" action="lista_formaPgto" />
+			</p:submenu>
+			<p:submenu label="Listas">
+				<p:menuitem value="Pessoa" action="lista_pessoa" />
+				<p:menuitem value="Produto" action="lista_produto" />
+			</p:submenu>
+			<f:facet name="options">
+				<p:inputText style="margin-right:10px" placeholder="Search" />
+				<p:commandButton
+					onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+					type="button" value="Sair" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<h:form id="form">
+		<p:dataTable id="tbl" var="f" value="#{formaPagtoCtrl.listagem}"
+			paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+			paginator="true" rows="10" style="margin-bottom:20px">
+			
+			<f:facet name="header">
+				<h:outputLabel value="Lista de Formas de Pagamentos" />
+				<p:commandButton value="Inserir" icon="icon-novo" actionListener="#{formaPagtoCtrl.actionInserir}" oncomplete="PF('cadDialog').show()" update=":form:cadDetail">
+				</p:commandButton>
+			</f:facet>
+						
+			<p:column headerText="Código" sortBy="f.id">
+				<h:outputText value="#{f.id}" />
+			</p:column>
+			
+			<p:column headerText="Descrição" sortBy="f.descricao">
+				<h:outputText value="#{f.descricao}" />
+			</p:column>
+			
+			<p:column headerText="N° Max. Parcelas" sortBy="f.numMaxParc">
+				<h:outputText value="#{f.numMaxParc}" />
+			</p:column>
+			
+			<p:column style="width:32px;text-align: center" >
+				<p:commandButton update=":form:cadDetail" oncomplete="PF('cadDialog').show()" icon="ui-icon-search" title="View">
+				<f:setPropertyActionListener value="#{f}" target="#{formaPagtoCtrl.formaPgto}" />			
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>		
+		<p:dialog header="Cadastro de Forma de Pagamento"  position="center center" width="500px" widgetVar="cadDialog" oncomplete="PF('cadDialog').show()" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:outputLabel id="cadDetail" style="text-align:center;">
+			<h:panelGrid columns="2" style="text-align:Left">
+				<h:outputLabel value="Código" />
+				<h:inputText value="#{formaPagtoCtrl.formaPgto.id}" size="6" maxlength="10" readonly="true"/>
+				<h:outputLabel value="Nome" />
+				<h:inputText value="#{formaPagtoCtrl.formaPgto.descricao}" size="30" maxlength="20"/>
+				<h:outputLabel value="N° Max. Parcelas" />
+				<h:inputText value="#{formaPagtoCtrl.formaPgto.numMaxParc}" size="6" maxlength="3"/>
+				<h:outputLabel value="N° Padrão de Parcelas" />
+				<h:inputText value="#{formaPagtoCtrl.formaPgto.numPadraoParc}" size="6" maxlength="3"/>
+				<h:outputLabel value="Intervalo (dias)" />
+				<h:inputText value="#{formaPagtoCtrl.formaPgto.intervaloDias}" size="6" maxlength="3"/>
+			</h:panelGrid>
+			<h:commandButton value="Excluir" action="#{formaPagtoCtrl.actionExcluir}" update="growl"/>
+			<h:commandButton value="Gravar" action="#{formaPagtoCtrl.actionGravar}" update="growl"/>
+			<h:commandButton value="Cancelar" oncomplete="cadDialog.hide()"/>
+		</p:outputLabel>
+		</p:dialog>		
+	</h:form>
+</h:body>
+</html>

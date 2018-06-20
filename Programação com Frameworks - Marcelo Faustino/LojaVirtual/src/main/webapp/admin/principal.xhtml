@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Loja Virtual</title>
+</h:head>
+<h:body>
+	<h:form id="menu">
+		<p:menubar>
+			<p:menuitem action="/admin/principal.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:menuitem>
+			<p:submenu label="Cadastrar">
+				<p:menuitem value="Pessoa" action="#{pessoaCtrl.actionInserir}" />
+				<p:menuitem value="Produto" action="#{produtoCtrl.actionInserir}" />
+				<p:menuitem value="Forma Pagamento" action="lista_formaPgto" />
+				
+			</p:submenu>
+			<p:submenu label="Listas">
+				<p:menuitem value="Pessoa" action="lista_pessoa" />
+				<p:menuitem value="Produto" action="lista_produto" />
+				
+			</p:submenu>
+			<f:facet name="options">
+				<p:commandButton value="Área do Cliente" action="/cliente/principal.xhtml" />
+				<p:commandButton
+					onclick="document.location='#{request.contextPath}/j_spring_security_logout'"
+					type="button" value="Sair" icon="ui-icon-extlink" />
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<h:form>		
+		<h:panelGrid columns="4">
+			<div>
+				<h:panelGrid columns="1">
+					<h:outputText value="Pesquisar Produto:" />
+					<h:inputText value="#{produtoCtrl.filtro}" />
+					<h:commandButton value="Listar Produtos" action="lista_produto" />
+				</h:panelGrid>
+				<br></br> <br></br> <br></br>
+			</div>
+			<div>
+				<h:panelGrid columns="1">
+					<h:outputText value="Pesquisar Pessoa:" />
+					<h:inputText value="#{pessoaCtrl.filtro}" />
+					<h:commandButton value="Listar Pessoa" action="lista_pessoa" />
+				</h:panelGrid>
+				<br></br> <br></br> <br></br>
+			</div>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+<h:message style="color:red;margin:2px;" />
+</html>

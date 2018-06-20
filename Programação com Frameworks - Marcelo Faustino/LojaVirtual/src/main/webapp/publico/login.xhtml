@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Login</title>
+</h:head>
+<h:body>
+	<h:form id="menu">
+		<p:toolbar>
+        <f:facet name="left">
+            <p:commandLink action="/publico/index.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:commandLink>          
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+           <p:inputText value="#{produtoCtrl.filtro}" />
+			<p:commandButton icon="ui-icon-search" action="/publico/index.xhtml" />
+        </f:facet>
+ 
+        <f:facet name="right">       	 
+            
+       	 <p:commandLink action="/publico/carrinho.xhtml">
+			<p:graphicImage value="/imagem/carrinho.png" width="35"/> 
+      	 </p:commandLink>
+      	 
+         <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>            
+         <p:commandButton value="Cadastre-se" action="#{pessoaCtrl.actionInserirCadastro}" />
+        </f:facet>
+ 
+    </p:toolbar>
+	</h:form>
+	
+	<h:panelGroup rendered="#{!empty param.login_error}">
+			Erro ao efetuar login.<br/>
+			Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+	 </h:panelGroup>
+	
+	<form id="login" method="post" action="#{request.contextPath}/j_spring_security_check">
+	<table>
+		<tr><td>Login</td>
+			<td><input id="loginL" type='text' name='j_username'/></td></tr>
+		<tr><td>Senha</td>
+			<td><input id="senhaL" type='password' name='j_password'/></td></tr>
+		<tr><td align="center"><input type="checkbox" name="_spring_security_remember_me"/></td>
+		<td>Logar automaticamente</td></tr>
+		<tr><td></td>
+			<td><input type="submit" value="Logar"/></td>
+		</tr>
+	</table>
+	<script>
+		document.getElementById("login").j_username.value="#{SPRING_SECURITY_LAST_USERNAME}";
+	</script>	
+	</form>
+</h:body>
+</html>

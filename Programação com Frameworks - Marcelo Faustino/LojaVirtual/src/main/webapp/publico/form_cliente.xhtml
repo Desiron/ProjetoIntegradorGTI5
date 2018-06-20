@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Formulário Pessoa</title>
+</h:head>
+<h:body>
+	<h:form id="menu">	
+		<p:toolbar>
+        <f:facet name="left">
+            <p:commandLink action="/publico/index.xhtml" >
+				<p:graphicImage value="/imagem/ChambaryTek.png" width="200" />
+			</p:commandLink>          
+ 
+            <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+ 
+           <p:inputText value="#{produtoCtrl.filtro}" />
+			<p:commandButton icon="ui-icon-search" action="/publico/index.xhtml" />
+        </f:facet>
+ 
+        <f:facet name="right">       	 
+            
+       	 <p:commandLink action="/publico/carrinho.xhtml">
+			<p:graphicImage value="/imagem/carrinho.png" width="35"/> 
+      	 </p:commandLink>
+      	 
+         <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+            </span>
+				<p:commandButton action="/publico/login.xhtml" value="Entre" />
+        </f:facet>
+ 
+    </p:toolbar>
+	</h:form>
+
+	<div align="left">	
+	<h:form id="pessoa">
+	<br></br>
+	<br></br>
+				<p:fieldset legend="Formulário de Cadastro"	style="margin-bottom:20px">
+					<p:panelGrid columns="3" styleClass="semBorda">
+						<p:fieldset legend="Dados Pessoais" style="margin-bottom:20px">
+							<p:panelGrid columns="2">
+								<h:outputText value="Nome" />
+								<p:inputText value="#{pessoaCtrl.pessoa.nome}" />
+								<h:outputText value="RG" />
+								<p:inputText value="#{pessoaCtrl.pessoa.rg}" />
+								<h:outputText value="CPF" />								
+								<p:inputMask value="#{pessoaCtrl.pessoa.cpf}"  mask="999.999.999-99" />								
+								<h:outputText value="Data de Nascimento" />
+								<p:calendar id="dataNasc" value="#{pessoaCtrl.pessoa.data_nasc}" yearRange="c-110:c+0" maxdate=""
+									locale="de" navigator="true" pattern="dd-MM-yyyy" />
+								<h:outputText value="Email" />
+								<p:inputText value="#{pessoaCtrl.pessoa.email}" />
+							</p:panelGrid>
+						</p:fieldset>
+						<p:fieldset legend="Endereço" style="margin-bottom:20px">
+							<p:panelGrid columns="2">
+								<h:outputText value="Rua" />
+								<p:inputText value="#{pessoaCtrl.pessoa.rua}" />
+								<h:outputText value="Bairro" />
+								<p:inputText value="#{pessoaCtrl.pessoa.bairro}" />
+								<h:outputText value="Cidade" />
+								<p:inputText value="#{pessoaCtrl.pessoa.cidade}" />
+								<h:outputText value="CEP" />
+								<p:inputMask value="#{pessoaCtrl.pessoa.cep}" mask="99999999" />								
+								<h:outputText value="UF" />
+								<p:selectOneMenu id="uf" value="#{pessoaCtrl.pessoa.uf}" style="width:125px"> 
+						            <f:selectItem itemLabel="AC" itemValue="AC" />
+									<f:selectItem itemLabel="AL" itemValue="AL" />
+									<f:selectItem itemLabel="AP" itemValue="AP" />
+									<f:selectItem itemLabel="AM" itemValue="AM" />
+									<f:selectItem itemLabel="BA" itemValue="BA" />
+									<f:selectItem itemLabel="CE" itemValue="CE" />
+									<f:selectItem itemLabel="DF" itemValue="DF" />
+									<f:selectItem itemLabel="ES" itemValue="ES" />
+									<f:selectItem itemLabel="GO" itemValue="GO" />
+									<f:selectItem itemLabel="MA" itemValue="MA" />
+									<f:selectItem itemLabel="MT" itemValue="MT" />
+									<f:selectItem itemLabel="MS" itemValue="MS" />
+									<f:selectItem itemLabel="MG" itemValue="MG" />
+									<f:selectItem itemLabel="PA" itemValue="PA" />
+									<f:selectItem itemLabel="PB" itemValue="PB" />
+									<f:selectItem itemLabel="PR" itemValue="PR" />
+									<f:selectItem itemLabel="PE" itemValue="PE" />
+									<f:selectItem itemLabel="PI" itemValue="PI" />
+									<f:selectItem itemLabel="RJ" itemValue="RJ" />
+									<f:selectItem itemLabel="RN" itemValue="RN" />
+									<f:selectItem itemLabel="RS" itemValue="RS" />
+									<f:selectItem itemLabel="RO" itemValue="RO" />
+									<f:selectItem itemLabel="RR" itemValue="RR" />
+									<f:selectItem itemLabel="SC" itemValue="SC" />
+									<f:selectItem itemLabel="SP" itemValue="SP" />
+									<f:selectItem itemLabel="SE" itemValue="SE" />
+									<f:selectItem itemLabel="TO" itemValue="TO" />
+						        </p:selectOneMenu>
+								<h:outputText value="Nova Senha" />
+								<p:password value="#{pessoaCtrl.pessoa.senha}" />
+							</p:panelGrid>
+						</p:fieldset>
+						<p:fieldset legend="Telefones de Contato"
+							style="margin-bottom:20px;width:90%;horizontal-align:center">
+							<h:form>
+								<div align="center">
+									<p:commandButton value="+ Fone"
+										action="#{pessoaCtrl.actionInserirFone}" update="pessoa"
+										style="top: 0px" />
+									<br></br>
+									<br></br>
+									<p:dataTable value="#{pessoaCtrl.pessoa.fones}" var="fone"
+										rules="rows" emptyMessage="Nenhum Telefone Adicionado!">
+										<br></br>
+										<br></br>
+										<p:column>
+											<f:facet name="header">
+												<h:outputLabel value="Número" />
+											</f:facet>
+												<p:inputMask  value="#{fone.numero}" mask="(99) 99999-9999" />
+										</p:column>
+										<p:column>
+											<f:facet name="header">
+												<h:outputLabel value="Descrição" />
+											</f:facet>
+											<p:inputText style="width:150px" value="#{fone.descricao}"
+												size="20" maxlength="20" />
+										</p:column>
+										<p:column style="width:40px">
+											<p:commandButton icon="ui-icon-closethick" action="#{pessoaCtrl.actionExcluirFone(fone)}" update="pessoa" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</h:form>
+						</p:fieldset>
+					</p:panelGrid>
+					<br></br>
+					<div align="left">
+					<p:commandButton value="Limpar" action="#{pessoaCtrl.limpar}"	update="pessoa" />
+					<p:commandButton value="Concluir Cadastro"	action="#{pessoaCtrl.actionGravarCadastro}"  update="pessoa,menu" />
+					</div>
+				</p:fieldset>
+		</h:form>		
+	</div>
+	<style type="text/css">
+.semBorda tr, .semBorda td {
+	border: none !important;
+	text-align: center;
+	align-content: center;
+}
+</style>
+</h:body>
+</html>
